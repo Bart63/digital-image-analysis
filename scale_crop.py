@@ -1,89 +1,74 @@
-import numpy as np
-import cv2
+from PIL import Image
 
 
-def get_sizes(img1:np.ndarray, img2:np.ndarray):
-    h1, w1 = img1.shape[:2]
-    h2, w2 = img2.shape[:2]
+def get_sizes(img1:Image.Image, img2:Image.Image):
+    w1, h1 = img1.size
+    w2, h2 = img2.size
     return h1, w1, h2, w2
 
 
-def resize_width(img1, img2):
+def resize_width(img1:Image.Image, img2:Image.Image):
     _, w1, h2, w2 = get_sizes(img1, img2)
-    new_h2 = int(h2 * w1/w2) # scale height of img2
-    img2 = cv2.resize(img2, (new_h2, w1))
+    new_h2 = int(h2 * w1 / w2)
+    img2 = img2.resize((w1, new_h2))
     return img1, img2
 
 
-def crop_height(img1, img2):
+def crop_height(img1:Image.Image, img2:Image.Image):
     h1, _, h2, _ = get_sizes(img1, img2)
-    center_y = h2//2
-    top_y = center_y - h1//2
+    center_y = h2 // 2
+    top_y = center_y - h1 // 2
     bottom_y = top_y + h1
-    img2 = img2[top_y:bottom_y, :]
+    img2 = img2.crop((0, top_y, img2.width, bottom_y))
     return img1, img2
 
 
-def width_process(img1:np.ndarray, img2:np.ndarray):
-    ## Get sizes
+def width_process(img1:Image.Image, img2:Image.Image):
     _, w1, _, w2 = get_sizes(img1, img2)
-    
-    ## If the same width, skip
+
     if w1 == w2:
         return img1, img2
-    
-    ## Make image 2 wider than image 1
+
     is_img1_wider = w1 > w2
     if is_img1_wider:
         img1, img2 = img2, img1
 
-    ## Resize
     img1, img2 = resize_width(img1, img2)
-    ## Return to the previous order
+
     if is_img1_wider:
         img1, img2 = img2, img1
-
-    ## Return images
     return img1, img2
 
 
-def height_process(img1:np.ndarray, img2:np.ndarray):
-    ## Get sizes
+def height_process(img1:Image.Image, img2:Image.Image):
     h1, _, h2, _ = get_sizes(img1, img2)
 
-    ## If the same height, skip
     if h1 == h2:
         return img1, img2
-    
+
     is_img1_higher = h1 > h2
     if is_img1_higher:
         img1, img2 = img2, img1
 
-    ## Crop height 
     img1, img2 = crop_height(img1, img2)
 
-    ## Return to the previous order
     if is_img1_higher:
         img1, img2 = img2, img1
     return img1, img2
 
 
-def scale_crop(img1:np.ndarray, img2:np.ndarray):
-    """Scale width, crop height"""
-
-    ## Transpose if the difference of heights is smaller than the difference of widths
+def scale_crop(img1:Image.Image, img2:Image.Image):
     h1, w1, h2, w2 = get_sizes(img1, img2)
-    transposed = abs(h1-h2) < abs(w1-w2)
+    transposed = abs(h1 - h2) < abs(w1 - w2)
+
     if transposed:
-        img1, img2 = img1.swapaxes(1, 0), img2.swapaxes(1, 0)
+        img1 = img1.transpose(Image.Transpose.ROTATE_90)
+        img2 = img2.transpose(Image.Transpose.ROTATE_90)
 
-    ## Scale width (axis where the difference is smallest)
     img1, img2 = width_process(img1, img2)
-
-    ## Crop height
     img1, img2 = height_process(img1, img2)
 
     if transposed:
-        img1, img2 = img1.swapaxes(1, 0), img2.swapaxes(1, 0)
-    
+        img1 = img1.transpose(Image.Transpose.ROTATE_270)
+        img2 = img2.transpose(Image.Transpose.ROTATE_270)
     return img1, img2
