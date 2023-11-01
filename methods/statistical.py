@@ -27,7 +27,7 @@ def stat_feature_vector(hist):
 
 def mean(hist):
     levels = 256
-    intensities = (np.arange(levels) - (levels // 2)) / (levels // 2 - 1) # normalization to [-1, 1]
+    intensities = (np.arange(levels) - (levels // 2 - 1)) / (levels // 2) # normalization to [-1, 1]
     mean_intensity = (intensities * hist)
     mean_intensity = mean_intensity.sum()
     return mean_intensity
@@ -35,7 +35,7 @@ def mean(hist):
 
 def n_moments(hist, n):
     levels = 256
-    intensities = (np.arange(levels) - (levels // 2)) / (levels // 2 - 1) # normalization to [-1, 1]
+    intensities = (np.arange(levels) - (levels // 2 - 1)) / (levels // 2) # normalization to [-1, 1]
     n_moment = ((intensities - mean(hist)) ** n * hist).sum()
     return n_moment
 
@@ -44,9 +44,9 @@ def entropy(hist):
     # add epsilon to hist so that log2(0) = 0
     hist = hist + np.finfo(float).eps
     entropy = - (hist * np.log2(hist)).sum()
-    return entropy
+    return (entropy - 4) / 4
 
 
 def energy(hist):
-    energy = (hist ** 2).sum()
+    energy = (hist ** 2).sum() * 2 - 1
     return energy
