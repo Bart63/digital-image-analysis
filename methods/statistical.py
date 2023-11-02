@@ -15,7 +15,7 @@ def stat_similarity(img1:np.ndarray, img2:np.ndarray):
     return cosine_similarity(v1, v2)
 
 
-def stat_feature_vector(hist):
+def stat_feature_vector(hist:np.ndarray):
     return np.array([
         mean(hist),
         n_moments(hist, 2), # variance
@@ -25,7 +25,7 @@ def stat_feature_vector(hist):
         energy(hist)
     ])
 
-def mean(hist):
+def mean(hist:np.ndarray):
     levels = 256
     intensities = (np.arange(levels) - (levels // 2 - 1)) / (levels // 2) # normalization to [-1, 1]
     mean_intensity = (intensities * hist)
@@ -33,20 +33,20 @@ def mean(hist):
     return mean_intensity
 
 
-def n_moments(hist, n):
+def n_moments(hist:np.ndarray, n):
     levels = 256
     intensities = (np.arange(levels) - (levels // 2 - 1)) / (levels // 2) # normalization to [-1, 1]
     n_moment = ((intensities - mean(hist)) ** n * hist).sum()
     return n_moment
 
 
-def entropy(hist):
+def entropy(hist:np.ndarray):
     # add epsilon to hist so that log2(0) = 0
     hist = hist + np.finfo(float).eps
     entropy = - (hist * np.log2(hist)).sum()
     return (entropy - 4) / 4
 
 
-def energy(hist):
+def energy(hist:np.ndarray):
     energy = (hist ** 2).sum() * 2 - 1
     return energy

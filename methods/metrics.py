@@ -3,16 +3,16 @@ from skimage.metrics import structural_similarity as ssim, mean_squared_error as
 from sklearn.metrics.pairwise import cosine_similarity as cs
 
 
-def ssim_similarity(image1:np.ndarray, image2:np.ndarray):
-    if image1.dtype != np.uint8 or image2.dtype != np.uint8:
-        val_max = np.maximum(image1, image1)
-        val_min = np.minimum(image1, image1)
-        return ssim(image1, image2, data_range=val_max - val_min)
-    return ssim(image1, image2)
+def ssim_similarity(img1:np.ndarray, img2:np.ndarray):
+    if img1.dtype != np.uint8 or img2.dtype != np.uint8:
+        val_max = np.maximum(img1, img2)
+        val_min = np.minimum(img1, img2)
+        return ssim(img1, img2, data_range=val_max - val_min)
+    return ssim(img1, img2)
 
 
-def mse_similarity(image1:np.ndarray, image2:np.ndarray):
-    return 1 / mse(image1, image2)
+def mse_similarity(img1:np.ndarray, img2:np.ndarray):
+    return 1 / mse(img1, img2)
 
 
 def cosine_similarity(v1:np.ndarray, v2:np.ndarray):
