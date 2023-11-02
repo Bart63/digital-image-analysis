@@ -14,10 +14,11 @@ SIM_FN = {
     'ssim': meth.ssim_similarity,
     'fourier': meth.fourier_similarity,
     'statistical': meth.stat_similarity,
+    'haralick': meth.haralick_similarity
 }
 
 
-def calc_similarity(indexes=[], preprocess=[], sim_fn=SIM_FN['statistical']):
+def calc_similarity(indexes=[], preprocess=[], sim_fn=SIM_FN['haralick']):
     ds, ds_test, idx2label = load_data()
     
     # Filter images with label indexes

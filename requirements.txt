@@ -1,4 +1,6 @@
 tqdm
 torchvision
 matplotlib
+mahotas
+opencv-python
 git+https://github.com/modestyachts/ImageNetV2_pytorch
