@@ -8,11 +8,11 @@ __Database images__: from __TopImages__.
 
 __Query images__: from merging __Threshold0.7__ with __MatchedFrequency__ and deleting identical images from __TopImages__. 
 
-Only a subset of classes for __Query images__ was chosen were images are similar to each other and the class object is big enough.
+Only a subset of classes (and images for __Query images__) was chosen where images are similar to each other and the class object is big enough.
 
 ## Preprocessing
 1. __Scale and crop__: Scale down dimension with the lowest difference and center crop.
-2. (optional) To __grayscale__ 
+2. (optional) Convert to colorspace: grayscale, HSV, ... 
 3. ...  
 
 ## Methods
