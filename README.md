@@ -24,17 +24,17 @@ Only a subset of classes for __Query images__ was chosen were images are similar
 - [x] Cosine similarity
 - [x] Bhattacharyya distance
 
-### Histogram-based methods
+### Image2Histogram methods
 - [ ] Grayscale/Color histogram
 - [x] Edge-based description
 - [x] Local Binary Pattern
 
-### Vector-based methods
+### Image2Vector methods
 - [x] Histogram of Oriented Gradients
 - [x] Statistical (mean, moments, entropy, energy)
 - [x] Haralick
 
-### Image2Image
+### Image2Image methods
 - [x] Fourier spectrum
 - [ ] Laws’ Texture Energy Measures
 - [ ] Gabor Filters
