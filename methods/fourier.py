@@ -6,7 +6,6 @@ from .metrics import METRICS
 def fourier_similarity(img1:np.ndarray, img2:np.ndarray, metric='ssim'):
     magnitude_spectrum1 = fourier_spectrum(img1)
     magnitude_spectrum2 = fourier_spectrum(img2)
-    print(magnitude_spectrum1.dtype)
     similarity = METRICS[metric](magnitude_spectrum1, magnitude_spectrum2)
     return similarity
 

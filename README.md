@@ -36,8 +36,8 @@ Only a subset of classes (and images for __Query images__) was chosen where imag
 
 ### Image2Image methods
 - [x] Fourier spectrum
-- [ ] Laws’ Texture Energy Measures
-- [ ] Gabor Filters
+- [x] Laws’ Texture Energy Measures
+- [x] Gabor Filters
 
 ## Evaluation
 __Top 10 accuracy__: if any image from top 10 belongs to the class of the query, we count it as a success.
