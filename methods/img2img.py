@@ -1,5 +1,23 @@
 import numpy as np
+import cv2 
+import matplotlib.pyplot as plt
+import pandas as pd
 
+
+def gabor(img:np.ndarray):
+  buff=np.copy(img)
+  gamma=1.2
+  sigma = 12
+  ksize=30
+  output=[]
+  for theta in range(8):
+    theta = theta/8. * np.pi
+    for lamda in [1/0.25,1/0.18,1/0.13,1/0.09,1/0.06]:
+      kernel=cv2.getGaborKernel((ksize,ksize),sigma,theta,lamda,gamma,0,ktype=cv2.CV_32F)
+      fimg=cv2.filter2D(buff,cv2.CV_8UC3,kernel)
+      output.append(np.copy(fimg))
+  output=np.array(output)
+  return output
 
 def law_texture(img:np.ndarray):
   buff=np.copy(img)
