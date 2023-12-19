@@ -5,6 +5,28 @@ from .metrics import bhattacharyya_distance, cosine_similarity
 import matplotlib.pyplot as plt
 from skimage import exposure
 
+
+def grayscale_histogram(img1:np.ndarray, img2:np.ndarray):
+    hist1 = hist_normalize(img1)
+    hist2 = hist_normalize(img2)
+    distance = bhattacharyya_distance(hist1, hist2)
+    return distance
+
+
+def RGB_histogram(img1:np.ndarray, img2:np.ndarray):
+    hist1 = cv2.calcHist([img1], [0, 1, 2], None, [256, 256, 256], [0, 256, 0, 256, 0, 256])
+    hist2 = cv2.calcHist([img2], [0, 1, 2], None, [256, 256, 256], [0, 256, 0, 256, 0, 256])
+    distance = bhattacharyya_distance(hist1, hist2)
+    return distance
+
+
+def HSV_histogram(img1:np.ndarray, img2:np.ndarray):
+    hist1 = cv2.calcHist([img1], [0, 1, 2], None, [180, 256, 256], [0, 180, 0, 256, 0, 256])
+    hist2 = cv2.calcHist([img2], [0, 1, 2], None, [180, 256, 256], [0, 180, 0, 256, 0, 256])
+    distance = bhattacharyya_distance(hist1, hist2)
+    return distance
+
+
 def hist_normalize(img:np.ndarray) -> np.ndarray:
     hist = cv2.calcHist([img], [0], None, [256], [0, 256])
     normalized_hist = hist / hist.sum()

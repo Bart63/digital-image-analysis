@@ -13,12 +13,18 @@ SIM_FN = {
     'mse': meth.mse_similarity,
     'ssim': meth.ssim_similarity,
     'psnr': meth.ssim_similarity,
-    'fourier': meth.fourier_similarity,
+
+    'gc_hist': meth.grayscale_histogram,
+    'rgb_hist': meth.RGB_histogram,
+    'hsv_hist': meth.HSV_histogram,
+    'magnitude-direction': meth.gradient_magnitude_and_direction,
+    'lbp': meth.lbp_distance,
+
     'statistical': meth.stat_similarity,
     'haralick': meth.haralick_similarity,
     'hog': meth.hog_similarity,
-    'magnitude-direction': meth.gradient_magnitude_and_direction,
-    'lbp': meth.lbp_distance,
+
+    'fourier': meth.fourier_similarity,
     'gabor': meth.gabor_similarity,
     'law': meth.law_similarity
 }
@@ -44,7 +50,7 @@ def run_single_test(preprocess=[], sim_fn=SIM_FN['lbp']):
                 img_k_np = preprocess_fn(img_k_np)
             similarity = sim_fn(img_q_np, img_k_np)
             results[query_fname].append(
-                [key_fname, lab_q, lab_k, similarity]
+                [key_fname, lab_q, lab_k, float(similarity)]
             )
     return results
 
@@ -58,11 +64,11 @@ def run_multiple(preprocess, sim_fns, test_names):
 
 def main():
     run_multiple(
-        preprocess=[prep.rgb2gray],
+        preprocess=[prep.rgb2hsv],
         sim_fns=[
-            SIM_FN['law'],
+            SIM_FN['hsv_hist'],
         ],
-        test_names = ['law_max'],
+        test_names = ['hsv_hist'],
     )
 
 
