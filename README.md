@@ -12,8 +12,7 @@ Only a subset of classes (and images for __Query images__) was chosen where imag
 
 ## Preprocessing
 1. __Scale and crop__: Scale down dimension with the lowest difference and center crop.
-2. (optional) Convert to colorspace: grayscale, HSV, ... 
-3. ...  
+2. __Convert to colorspace__: grayscale or HSV. 
 
 ## Methods
 
@@ -25,7 +24,7 @@ Only a subset of classes (and images for __Query images__) was chosen where imag
 - [x] Bhattacharyya distance
 
 ### Image2Histogram methods
-- [ ] Grayscale/Color histogram
+- [x] Grayscale/Color histogram
 - [x] Edge-based description
 - [x] Local Binary Pattern
 
